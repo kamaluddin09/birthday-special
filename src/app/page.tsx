@@ -1,69 +1,124 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Lenis from "lenis";
+import { useAudio } from "@/hooks/useAudio";
+import { WelcomeScreen } from "@/components/WelcomeScreen";
+import { BirthdayHero } from "@/components/BirthdayHero";
+import { PhotoGallerySection } from "@/components/PhotoGallerySection";
+import { RelationshipTicker } from "@/components/RelationshipTicker";
+import { MemoryTimeline } from "@/components/MemoryTimeline";
+import { LoveLetter } from "@/components/LoveLetter";
+import { LoveCards } from "@/components/LoveCards";
+import { SuspenseSection } from "@/components/SuspenseSection";
+import { FinalCelebration } from "@/components/FinalCelebration";
+import { FloatingHeartsCanvas } from "@/components/FloatingHeartsCanvas";
+import { MusicPlayer } from "@/components/MusicPlayer";
+import { StoryProgress } from "@/components/StoryProgress";
+import { CustomCursor } from "@/components/CustomCursor";
+
+export default function BirthdayPage() {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
+  const {
+    isPlaying,
+    isMuted,
+    isSynthActive,
+    startAudio,
+    togglePlay,
+    toggleMute,
+  } = useAudio();
+
+  // Initialize Lenis Smooth Momentum Scrolling
+  useEffect(() => {
+    if (!isRevealed) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    let animationFrameId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+    };
+  }, [isRevealed]);
+
+  const handleOpenSurprise = () => {
+    setIsOpening(true);
+    // Start audio on user gesture
+    startAudio();
+
+    // Cinematic transition timeout
+    setTimeout(() => {
+      setIsRevealed(true);
+    }, 800);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="relative min-h-screen w-full bg-[#14030B] text-[#FFF8F5] overflow-x-hidden">
+      {/* Desktop Magnetic Custom Cursor */}
+      <CustomCursor />
+
+      {/* Persistent Floating Hearts Background Atmosphere */}
+      <FloatingHeartsCanvas intensity="normal" />
+
+      {/* Scene 01: Secret Welcome Screen */}
+      {!isRevealed && (
+        <WelcomeScreen onOpen={handleOpenSurprise} isOpening={isOpening} />
+      )}
+
+      {/* Main Website Experience (Revealed after opening) */}
+      <div
+        className={`transition-opacity duration-1000 ${
+          isRevealed ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Story Chapter Navigation */}
+        <StoryProgress isRevealed={isRevealed} />
+
+        {/* Ambient Music Player Toggle */}
+        <MusicPlayer
+          isPlaying={isPlaying}
+          isMuted={isMuted}
+          isSynthActive={isSynthActive}
+          onTogglePlay={togglePlay}
+          onToggleMute={toggleMute}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Scene 02: Birthday Celebration Hero & Interactive Cake */}
+        <BirthdayHero />
+
+        {/* 3D Cylindrical Photo Gallery */}
+        <PhotoGallerySection />
+
+        {/* Live Relationship Counter Ticker */}
+        <RelationshipTicker />
+
+        {/* Scene 03: Our Story / Memories Parallax Timeline */}
+        <MemoryTimeline />
+
+        {/* Scene 04: The Interactive Love Letter */}
+        <LoveLetter />
+
+        {/* Scene 05: Things I Love About You Cards */}
+        <LoveCards />
+
+        {/* Scene 06: Emotional Suspense Section */}
+        <SuspenseSection />
+
+        {/* Scene 07: Final Celebration & Fireworks Climax */}
+        <FinalCelebration />
+      </div>
+    </main>
   );
 }
