@@ -19,49 +19,60 @@ export const loveReasons: LoveReason[] = [
   {
     id: 1,
     iconName: "Sparkles",
-    title: "Your Radiant Smile",
-    summary: "The effortless way it lights up an entire room and warms my coldest days.",
-    tag: "Pure Light",
-    personalNote: "[ADD PERSONAL NOTE: E.g., The genuine crinkle near your eyes whenever you are truly happy is my favorite sight in the world.]",
+    title: "That Smile of Yours 😊",
+    summary: "Honestly, your smile is one of the first things I fell in love with.",
+    tag: "My Favorite Smile ❤️",
+    personalNote:
+      "I don't know how you do it, but whenever you smile at me, my whole mood just changes. I could look at that smile forever.",
   },
+
   {
     id: 2,
     iconName: "Smile",
-    title: "Your Contagious Laugh",
-    summary: "The sweetest, most melodic sound that instantly makes everything better.",
-    tag: "My Favorite Sound",
-    personalNote: "[ADD PERSONAL NOTE: E.g., Especially that unrestrained, pure laugh when something caught you completely off guard.]",
+    title: "Your Laugh 😂",
+    summary: "I love how you laugh, especially when you completely forget to control it.",
+    tag: "My Favorite Sound 🎧",
+    personalNote:
+      "Your real, uncontrollable laugh is probably my favorite thing. And honestly, sometimes I say something stupid just to hear you laugh.",
   },
+
   {
     id: 3,
     iconName: "HeartHandshake",
-    title: "Your Gentle Kindness",
-    summary: "How deeply and tenderly you treat everyone around you with grace and empathy.",
-    tag: "Golden Heart",
-    personalNote: "[ADD PERSONAL NOTE: E.g., The way you notice when someone is having a rough day and quietly make them feel cared for.]",
+    title: "Your Kind Heart 🥹",
+    summary: "You care about people in a way that I really admire about you.",
+    tag: "That Big Heart ❤️",
+    personalNote:
+      "I love how you care about the people you love. Even when you don't say much, you always find little ways to show that you care.",
   },
+
   {
     id: 4,
     iconName: "Heart",
-    title: "The Way You Care",
-    summary: "The warmth and thoughtfulness you pour into the people and things you cherish.",
-    tag: "Unconditional",
-    personalNote: "[ADD PERSONAL NOTE: E.g., The way you check in on me, remember little things I mentioned weeks ago, and always make me feel supported.]",
+    title: "The Way You Care About Me 🫶",
+    summary: "You have your own little ways of making me feel loved and cared for.",
+    tag: "You & Me 💕",
+    personalNote:
+      "I love the way you check on me, ask how I'm doing, remember little things I tell you, and somehow know when something is bothering me.",
   },
+
   {
     id: 5,
     iconName: "Gift",
-    title: "The Little Things You Do",
-    summary: "The cute habits, tiny gestures, and quirks that make you uniquely you.",
-    tag: "Small Wonders",
-    personalNote: "[ADD PERSONAL NOTE: E.g., The way you hold your tea mug with both hands or hum softly to yourself when you're focusing.]",
+    title: "All Your Little Things 🥰",
+    summary: "It's the little things you do that make you... well, you.",
+    tag: "Just You 💗",
+    personalNote:
+      "Your little habits, the way you talk, the random things you say, and even the things you probably don't notice about yourself are some of the things I love most.",
   },
+
   {
     id: 6,
     iconName: "Sun",
-    title: "Making Ordinary Days Special",
-    summary: "A simple grocery run or quiet walk feels like the greatest adventure with you.",
-    tag: "Everyday Magic",
-    personalNote: "[ADD PERSONAL NOTE: E.g., You turn the mundane into magical memories simply by being there by my side.]",
+    title: "Just Being With You ❤️",
+    summary: "It doesn't really matter where we are. I just like having you around.",
+    tag: "My Favorite Person 🌎",
+    personalNote:
+      "We don't need fancy dates or big plans. Sometimes just sitting with you, talking about random things, or even doing nothing feels like enough for me.",
   },
 ];

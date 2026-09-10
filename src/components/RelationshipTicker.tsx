@@ -68,10 +68,12 @@ function calculateTimeSince(startDate: Date): TimeUnits {
 }
 
 export function RelationshipTicker() {
+  const [mounted, setMounted] = useState(false);
   const [time, setTime] = useState<TimeUnits>(() => calculateTimeSince(PROPOSAL_DATE));
   const [hasHeartBeated, setHasHeartBeated] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setTime(calculateTimeSince(PROPOSAL_DATE));
       setHasHeartBeated((prev) => !prev);
@@ -118,7 +120,7 @@ export function RelationshipTicker() {
         </div>
 
         {/* Live Running Counter Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 max-w-3xl mx-auto">
+        <div suppressHydrationWarning className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 max-w-3xl mx-auto">
           {timeCards.map((card, idx) => (
             <div
               key={card.label}
@@ -135,7 +137,10 @@ export function RelationshipTicker() {
 
               {/* Number */}
               <div className="flex items-center gap-1 my-1">
-                <span className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+                <span
+                  suppressHydrationWarning
+                  className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight"
+                >
                   {card.label === "Seconds" || card.label === "Minutes" || card.label === "Hours"
                     ? String(card.value).padStart(2, "0")
                     : card.value}
@@ -162,7 +167,9 @@ export function RelationshipTicker() {
         <div className="glass-panel mx-auto max-w-xl rounded-2xl p-5 sm:p-6 space-y-3">
           <div className="flex items-center justify-center gap-2 text-xs font-semibold tracking-wider text-[#F9D976] uppercase">
             <Sparkles className="h-4 w-4" />
-            <span>Over {time.totalDays.toLocaleString()} Total Days of Unconditional Love</span>
+            <span suppressHydrationWarning>
+              Over {time.totalDays.toLocaleString()} Total Days of Unconditional Love
+            </span>
             <Sparkles className="h-4 w-4" />
           </div>
 

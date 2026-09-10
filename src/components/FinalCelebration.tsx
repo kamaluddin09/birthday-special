@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { birthdayContent } from "@/data/birthdayContent";
 import { triggerGrandFinaleConfetti } from "@/lib/confetti";
 import { FireworksCanvas } from "./FireworksCanvas";
-import { Heart, Sparkles, Calendar, RotateCcw } from "lucide-react";
+import { Heart, Sparkles, Calendar } from "lucide-react";
 
 export function FinalCelebration() {
   const hasTriggeredRef = useRef(false);
@@ -32,8 +32,17 @@ export function FinalCelebration() {
     triggerGrandFinaleConfetti();
   };
 
-  const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleMakeAnotherWish = () => {
+    // Relight candles on the cake
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("relight-cake"));
+    }
+    const el = document.getElementById("hero");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -80,19 +89,19 @@ export function FinalCelebration() {
         {/* Interactive Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
           <button
-            onClick={handleCelebrateClick}
+            onClick={handleMakeAnotherWish}
             className="glow-button group inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-[#FF4F8B]/40"
           >
             <Sparkles className="h-4 w-4 text-[#F9D976] group-hover:rotate-180 transition-transform duration-500" />
-            <span>{final.replayCelebrationButton}</span>
+            <span>{final.replayWishButton}</span>
           </button>
 
           <button
-            onClick={handleBackToTop}
-            className="inline-flex items-center gap-2 rounded-full border border-[#FFE4EF]/25 bg-[#250713]/70 px-6 py-3.5 text-sm sm:text-base font-medium text-[#FFE4EF] backdrop-blur-md transition-all duration-300 hover:border-[#FF4F8B] hover:text-white hover:bg-[#FF4F8B]/20"
+            onClick={handleCelebrateClick}
+            className="inline-flex items-center gap-2 rounded-full border border-[#FF4F8B]/40 bg-[#250713]/80 px-6 py-3.5 text-sm sm:text-base font-medium text-[#FFE4EF] backdrop-blur-md transition-all duration-300 hover:border-[#FF4F8B] hover:text-white hover:bg-[#FF4F8B]/20 shadow-md"
           >
-            <RotateCcw className="h-4 w-4" />
-            <span>Back to Beginning</span>
+            <Sparkles className="h-4 w-4 text-[#FF4F8B]" />
+            <span>{final.replayCelebrationButton}</span>
           </button>
         </div>
 

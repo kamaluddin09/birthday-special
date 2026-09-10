@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { loveReasons, LoveReason } from "@/data/loveReasons";
 import { birthdayContent } from "@/data/birthdayContent";
 import {
@@ -10,7 +9,6 @@ import {
   Heart,
   Gift,
   Sun,
-  ChevronDown,
 } from "lucide-react";
 
 const iconMap = {
@@ -23,12 +21,6 @@ const iconMap = {
 };
 
 export function LoveCards() {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-
-  const toggleExpand = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
   return (
     <section
       id="reasons"
@@ -53,60 +45,45 @@ export function LoveCards() {
         </p>
       </div>
 
-      {/* Grid of Interactive Cards */}
+      {/* Grid of Cards */}
       <div className="mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {loveReasons.map((reason: LoveReason) => {
           const IconComponent = iconMap[reason.iconName] || Heart;
-          const isExpanded = expandedId === reason.id;
 
           return (
             <div
               key={reason.id}
-              onClick={() => toggleExpand(reason.id)}
-              className="glass-card group relative cursor-pointer rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 select-none"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) =>
-                (e.key === "Enter" || e.key === " ") && toggleExpand(reason.id)
-              }
-              aria-expanded={isExpanded}
+              className="glass-card group relative rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 select-none hover:border-[#FF4F8B]/50 hover:shadow-[0_20px_40px_rgba(233,30,99,0.25)]"
             >
-              <div>
-                {/* Card Top: Icon & Tag */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F8B]/20 to-[#E63946]/20 border border-[#FF4F8B]/30 text-[#FF4F8B] shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-[#FF4F8B] transition-all duration-300">
-                    <IconComponent className="h-6 w-6" />
+              <div className="flex flex-col flex-1 justify-between">
+                <div>
+                  {/* Card Top: Icon & Tag */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF4F8B]/20 to-[#E63946]/20 border border-[#FF4F8B]/30 text-[#FF4F8B] shadow-inner group-hover:scale-110 group-hover:text-white group-hover:bg-[#FF4F8B] transition-all duration-300">
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+                    <span className="rounded-full bg-[#18030D] border border-[#FF4F8B]/20 px-3 py-1 text-[11px] font-medium tracking-wide text-[#F9D976]">
+                      {reason.tag}
+                    </span>
                   </div>
-                  <span className="rounded-full bg-[#18030D] border border-[#FF4F8B]/20 px-3 py-1 text-[11px] font-medium tracking-wide text-[#F9D976]">
-                    {reason.tag}
-                  </span>
+
+                  {/* Title */}
+                  <h3 className="font-serif text-xl sm:text-2xl font-semibold text-white group-hover:text-[#FFE4EF] transition-colors mb-3">
+                    {reason.title}
+                  </h3>
+
+                  {/* Summary */}
+                  <p className="text-sm text-[#FFE4EF]/75 font-light leading-relaxed">
+                    {reason.summary}
+                  </p>
                 </div>
 
-                {/* Title */}
-                <h3 className="font-serif text-xl sm:text-2xl font-semibold text-white group-hover:text-[#FFE4EF] transition-colors mb-3">
-                  {reason.title}
-                </h3>
-
-                {/* Summary */}
-                <p className="text-sm text-[#FFE4EF]/75 font-light leading-relaxed mb-4">
-                  {reason.summary}
-                </p>
-              </div>
-
-              {/* Revealable Personal Note */}
-              <div className="pt-4 border-t border-[#FF4F8B]/15">
-                <div className="flex items-center justify-between text-xs text-[#FF4F8B] font-medium">
-                  <span>{isExpanded ? "Hide thought" : "Read secret note"}</span>
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-300 ${
-                      isExpanded ? "rotate-180 text-[#F9D976]" : ""
-                    }`}
-                  />
-                </div>
-
-                {isExpanded && (
-                  <div className="mt-3 rounded-xl bg-[#14030B]/80 p-3.5 border border-[#F9D976]/30 text-xs sm:text-sm text-[#F9D976] leading-relaxed animate-fade-in font-serif italic">
-                    {reason.personalNote}
+                {/* Personal Note Box (Directly visible without any button) */}
+                {reason.personalNote && (
+                  <div className="mt-6 pt-4 border-t border-[#FF4F8B]/15">
+                    <div className="rounded-xl bg-[#14030B]/60 p-3.5 border border-[#F9D976]/20 text-xs sm:text-sm text-[#F9D976]/95 leading-relaxed font-serif italic">
+                      &ldquo;{reason.personalNote}&rdquo;
+                    </div>
                   </div>
                 )}
               </div>

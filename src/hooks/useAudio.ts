@@ -82,7 +82,7 @@ export function useAudio() {
 
   // Initialize audio element
   useEffect(() => {
-    const audio = new Audio("/music/birthday-song.mp3");
+    const audio = new Audio("/music/leberch-happy-birthday-581704.mp3");
     audio.loop = true;
     audio.preload = "auto";
     audioRef.current = audio;

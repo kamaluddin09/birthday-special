@@ -18,15 +18,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Happy Birthday ❤️",
-  description: "A little birthday surprise made with love.",
+  title: "Happy Birthday Seema ❤️ | A Special Surprise Just For You",
+  description:
+    "A cinematic, personalized celebration filled with our five years of memories, love, and sweetest moments.",
   openGraph: {
-    title: "Happy Birthday ❤️",
-    description: "A little birthday surprise made with love.",
+    title: "Happy Birthday Seema ❤️",
+    description: "A special birthday surprise celebration crafted just for you.",
     type: "website",
+    siteName: "Happy Birthday Seema ❤️",
+    images: [
+      {
+        url: "/gallery/IMG-20220126-WA0064.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Happy Birthday Seema ❤️",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Happy Birthday Seema ❤️",
+    description: "A special birthday surprise celebration crafted just for you.",
+    images: ["/gallery/IMG-20220126-WA0064.jpg"],
   },
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>",
   },
 };
 

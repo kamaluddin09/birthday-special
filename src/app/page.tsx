@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useAudio } from "@/hooks/useAudio";
 import { WelcomeScreen } from "@/components/WelcomeScreen";
 import { BirthdayHero } from "@/components/BirthdayHero";
@@ -29,9 +31,11 @@ export default function BirthdayPage() {
     toggleMute,
   } = useAudio();
 
-  // Initialize Lenis Smooth Momentum Scrolling
+  // Initialize Lenis Smooth Momentum Scrolling integrated with GSAP ScrollTrigger
   useEffect(() => {
     if (!isRevealed) return;
+
+    gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -40,15 +44,23 @@ export default function BirthdayPage() {
       touchMultiplier: 1.5,
     });
 
-    let animationFrameId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-    animationFrameId = requestAnimationFrame(raf);
+    lenis.on("scroll", ScrollTrigger.update);
+
+    const updateLenis = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateLenis);
+    gsap.ticker.lagSmoothing(0);
+
+    // Refresh ScrollTrigger positions once the DOM layout settles
+    const timer1 = setTimeout(() => ScrollTrigger.refresh(), 400);
+    const timer2 = setTimeout(() => ScrollTrigger.refresh(), 1200);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
   }, [isRevealed]);

@@ -97,9 +97,11 @@ export function LoveLetter() {
             </div>
 
             {/* Salutation */}
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#250713] mb-6">
-              {letter.greeting}
-            </h3>
+            {letter.greeting && (
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#250713] mb-6">
+                {letter.greeting}
+              </h3>
+            )}
 
             {/* Letter Body Paragraphs */}
             <div className="space-y-5 text-base sm:text-lg font-normal text-[#380E21] leading-relaxed font-serif">

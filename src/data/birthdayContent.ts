@@ -97,14 +97,14 @@ export const birthdayContent: BirthdayContent = {
     envelopeLabel: "For My Favorite Person",
     envelopeInstruction: "Click to open the wax seal 💌",
     recipientName: "Seema",
-    greeting: "Dear Seema,",
+    greeting: "",
     paragraphs: [
-      "[YOUR PERSONAL LOVE LETTER GOES HERE — Paragraph 1: You can write about how much she means to you, how her presence transforms your days, and how grateful you are to celebrate another year of her life.]",
-      "[Paragraph 2: Mention your favorite qualities about her, a gentle memory, or the warmth she brings into your world whenever she smiles.]",
-      "[Paragraph 3: Write your hopes and heartfelt birthday wishes for her upcoming year, promising to be right beside her through every step.]",
+      "Happy birthday, my love. ❤️ I hope this new year of your life brings you all the happiness, peace, and success you deserve. I feel incredibly lucky that I get to celebrate another year of your life with you. You have brought so much happiness, love, and meaning into my life, and I honestly can't imagine my journey without you in it. Today is your day, but somehow, I feel like I'm the lucky one for having you in my life.",
+      "When I look back at our five years together, I can't believe how far we've come. From being just friends, to those secret dates, countless conversations, silly laughs, beautiful memories, and everything we've experienced together—you slowly became such an important part of my life. We've seen so many different versions of each other, grown together, and created memories that I'll carry with me forever. And honestly, if I had the chance to go back and live those five years again, I would choose you all over again.",
+      "And now, here we are, still building our lives and chasing our dreams. I know these days are busy for both of us. We're in our struggle phase, trying to build our futures, and sometimes we don't have enough time for each other. But I want you to always remember one thing: no matter how busy life gets, no matter how difficult things become, and no matter where life takes us, I will always love you. I believe there are so many beautiful chapters waiting for us ahead—more places to visit, more memories to make, more dreams to achieve, and hopefully a beautiful life that we build together. I don't know exactly what the future holds, but I know who I want beside me when we get there.",
     ],
     signOff: "Forever and always yours,",
-    senderName: "[YOUR NAME]",
+    senderName: "Kamal ❤️",
   },
 
   loveReasons: {
@@ -118,14 +118,21 @@ export const birthdayContent: BirthdayContent = {
     line3: "You make my world a little brighter just by being in it.",
     heartCaption: "You are my favorite thought.",
   },
-
   final: {
     headline: "HAPPY BIRTHDAY ❤️",
+
     subheading: "To the most beautiful person in my world.",
+
     date: "11 SEPTEMBER 2026",
-    closingMessage: "This little website may only be a few pages of code, but every single part of it was made with you in mind.",
-    personalClosingNote: "[YOUR PERSONAL CLOSING MESSAGE — E.g., 'Thank you for being you. Happy 2026 Birthday, darling!']",
+
+    closingMessage:
+      "This little website may only be a few pages of code, but every single part of it was made with you in mind.",
+
+    personalClosingNote:
+      "If you've made it this far, I just want you to know how much you mean to me. ❤️ Five years have passed, and somehow I still find new reasons to love you. We've had beautiful days, difficult days, crazy moments, and so many memories that I never want to forget. I know life is a little busy for both of us right now. We're both trying to build our futures, we're in our struggle phase, and sometimes we don't get as much time for each other as we'd like. But please never think that distance, busy days, or less time can change what I feel for you. No matter how life changes, I will always love you. I hope we get to look back at this someday and laugh about how hard these days were, while sitting together and remembering that we made it through everything. Until then, keep chasing your dreams, keep smiling, and always remember that you have someone who will always be cheering for you. Happy birthday, my love. ❤️ Here's to you, to us, and to all the memories we haven't made yet. I love you. ❤️",
+
     replayWishButton: "Make Another Wish 🎂",
+
     replayCelebrationButton: "Fireworks & Confetti 🎆",
   },
 };

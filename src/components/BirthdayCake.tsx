@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { triggerCandleBlowConfetti } from "@/lib/confetti";
 import { useMicrophoneBlow } from "@/hooks/useMicrophoneBlow";
 import { Sparkles, RefreshCw, Mic, MicOff, Wind } from "lucide-react";
@@ -51,6 +51,15 @@ export function BirthdayCake({ promptText, wishMadeText }: BirthdayCakeProps) {
     setIsBlownOut(false);
     setShowSmoke(false);
   };
+
+  useEffect(() => {
+    const handleRelightEvent = () => {
+      setIsBlownOut(false);
+      setShowSmoke(false);
+    };
+    window.addEventListener("relight-cake", handleRelightEvent);
+    return () => window.removeEventListener("relight-cake", handleRelightEvent);
+  }, []);
 
   // Flame dynamic distortion when blowing
   const flameFlutterScale = isListening ? 1 - (blowProgress / 100) * 0.45 : 1;

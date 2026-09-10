@@ -12,6 +12,7 @@ export function SuspenseSection() {
   const text2Ref = useRef<HTMLHeadingElement | null>(null);
   const text3Ref = useRef<HTMLParagraphElement | null>(null);
   const heartRef = useRef<HTMLDivElement | null>(null);
+  const captionRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -20,42 +21,112 @@ export function SuspenseSection() {
     const container = containerRef.current;
     if (!container) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: container,
-          start: "top 70%",
-          end: "bottom 80%",
-          toggleActions: "play none none reverse",
+    // Set initial hidden states to prevent any flash of static content
+    gsap.set([text1Ref.current, text2Ref.current, text3Ref.current], {
+      opacity: 0,
+      y: 40,
+      filter: "blur(6px)",
+    });
+    gsap.set(heartRef.current, {
+      opacity: 0,
+      scale: 0.35,
+    });
+    gsap.set(captionRef.current, {
+      opacity: 0,
+      y: 15,
+    });
+
+    // Create the master sequential cinematic reveal timeline
+    const tl = gsap.timeline({ paused: true });
+
+    tl.to(text1Ref.current, {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      duration: 1.2,
+      ease: "power3.out",
+    })
+      .to(
+        text2Ref.current,
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 1.4,
+          ease: "power3.out",
         },
-      });
-
-      tl.fromTo(
-        text1Ref.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+        "+=0.35"
       )
-        .fromTo(
-          text2Ref.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
-          "+=0.3"
-        )
-        .fromTo(
-          text3Ref.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 1.4, ease: "power2.out" },
-          "+=0.4"
-        )
-        .fromTo(
-          heartRef.current,
-          { opacity: 0, scale: 0.6 },
-          { opacity: 1, scale: 1, duration: 1.6, ease: "elastic.out(1, 0.6)" },
-          "-=0.5"
-        );
-    }, container);
+      .to(
+        text3Ref.current,
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 1.4,
+          ease: "power3.out",
+        },
+        "+=0.4"
+      )
+      .to(
+        heartRef.current,
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.8,
+          ease: "elastic.out(1.2, 0.5)",
+        },
+        "+=0.35"
+      )
+      .to(
+        captionRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power2.out",
+        },
+        "-=0.9"
+      );
 
-    return () => ctx.revert();
+    // Reliable IntersectionObserver to trigger animation when section enters viewport
+    let isRevealed = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+            tl.play();
+            isRevealed = true;
+          } else if (entry.intersectionRatio <= 0.05 && isRevealed) {
+            // Reset when completely scrolled out of view so it replays upon return
+            tl.pause(0);
+            isRevealed = false;
+          }
+        });
+      },
+      {
+        threshold: [0, 0.2, 0.5],
+        rootMargin: "0px 0px -5% 0px",
+      }
+    );
+
+    observer.observe(container);
+
+    // ScrollTrigger integration for synchronized scroll monitoring
+    const st = ScrollTrigger.create({
+      trigger: container,
+      start: "top 75%",
+      end: "bottom 15%",
+      onEnter: () => tl.play(),
+      onEnterBack: () => tl.play(),
+      onLeaveBack: () => tl.pause(0),
+    });
+
+    return () => {
+      observer.disconnect();
+      st.kill();
+      tl.kill();
+    };
   }, []);
 
   const suspense = birthdayContent.suspense;
@@ -106,7 +177,10 @@ export function SuspenseSection() {
             <Heart className="relative h-20 w-20 sm:h-28 sm:w-28 text-[#FF4F8B] fill-[#E63946] filter drop-shadow-[0_0_30px_rgba(255,79,139,0.8)] transition-transform duration-500 hover:scale-110" />
           </div>
 
-          <span className="font-serif italic text-sm sm:text-base text-[#F9D976]/80 tracking-widest uppercase">
+          <span
+            ref={captionRef}
+            className="font-serif italic text-sm sm:text-base text-[#F9D976]/80 tracking-widest uppercase inline-block"
+          >
             {suspense.heartCaption}
           </span>
         </div>

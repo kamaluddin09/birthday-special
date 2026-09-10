@@ -10,8 +10,8 @@ import { Heart, Sparkles, ZoomIn } from "lucide-react";
 export function PhotoGallery3D() {
   const [rotation, setRotation] = useState(0);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [radius, setRadius] = useState(380);
-  const [cardSize, setCardSize] = useState({ width: 210, height: 295 });
+  const [radius, setRadius] = useState(440);
+  const [cardSize, setCardSize] = useState({ width: 165, height: 225 });
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rotationRef = useRef(0);
@@ -28,22 +28,39 @@ export function PhotoGallery3D() {
 
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  // Responsive radius & card size calculation
+  // Responsive radius & card size calculation with generous spacing
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth;
+      const count = galleryPhotos.length;
       if (w < 480) {
-        setRadius(180);
-        setCardSize({ width: 125, height: 175 });
+        // Mobile screens: compact card with airy spacing
+        const cardW = 105;
+        const cardH = 145;
+        const dynamicR = Math.round((count * cardW * 1.32) / (2 * Math.PI));
+        setRadius(Math.max(220, dynamicR));
+        setCardSize({ width: cardW, height: cardH });
       } else if (w < 768) {
-        setRadius(240);
-        setCardSize({ width: 155, height: 220 });
+        // Small tablets / large phones
+        const cardW = 125;
+        const cardH = 170;
+        const dynamicR = Math.round((count * cardW * 1.35) / (2 * Math.PI));
+        setRadius(Math.max(280, dynamicR));
+        setCardSize({ width: cardW, height: cardH });
       } else if (w < 1024) {
-        setRadius(320);
-        setCardSize({ width: 185, height: 260 });
+        // Tablets / small laptops
+        const cardW = 145;
+        const cardH = 200;
+        const dynamicR = Math.round((count * cardW * 1.38) / (2 * Math.PI));
+        setRadius(Math.max(350, dynamicR));
+        setCardSize({ width: cardW, height: cardH });
       } else {
-        setRadius(390);
-        setCardSize({ width: 215, height: 300 });
+        // Desktop: elegant, shorter, perfectly proportioned cards with clean gaps
+        const cardW = 165;
+        const cardH = 225;
+        const dynamicR = Math.round((count * cardW * 1.42) / (2 * Math.PI));
+        setRadius(Math.max(430, dynamicR));
+        setCardSize({ width: cardW, height: cardH });
       }
     };
 
@@ -201,11 +218,11 @@ export function PhotoGallery3D() {
         }}
       >
         {/* Dark Reflective Stage Floor with Radial Ambient Light */}
-        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 h-44 w-[90%] max-w-[850px] rounded-full bg-radial from-[#FF4F8B]/20 via-[#35071C]/15 to-transparent blur-2xl" />
+        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 h-44 w-[90%] max-w-[950px] rounded-full bg-radial from-[#FF4F8B]/20 via-[#35071C]/15 to-transparent blur-2xl" />
 
         {/* 3D Cylinder Container */}
         <div
-          className="relative flex items-center justify-center transition-transform"
+          className="relative flex items-center justify-center transition-transform mt-6 sm:mt-8"
           style={{
             transformStyle: "preserve-3d",
             width: `${cardSize.width}px`,
